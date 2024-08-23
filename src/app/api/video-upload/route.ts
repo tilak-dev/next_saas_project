@@ -4,6 +4,11 @@ import { auth } from "@clerk/nextjs/server";
 import { PrismaClient } from "@prisma/client/extension";
 
 const prisma = new PrismaClient();
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View Credentials' below to copy your API secret
+});
 
 interface cloudinaryUploadResult {
   public_id: string;

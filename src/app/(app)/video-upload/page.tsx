@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -52,7 +53,7 @@ function VedioUpload() {
           <label className="label">
             <span className="label-text">Title</span>
           </label>
-          <input
+          <input 
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
