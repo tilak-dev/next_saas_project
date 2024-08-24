@@ -13,10 +13,12 @@ function Home() {
   const fetchVideos = useCallback(async () => {
     setLoading(true)
     try {
-      const response = await axios.get("api/videos")
+      const response = await axios.get("/api/videos")
       if(Array.isArray(response)){
         setVideos(response.data)
       }else{
+        console.log("bhai ye h response",response)
+        console.log("bhai ye h response data",response.data)
         throw new Error("unable to get videos")
       } 
     } catch (error) {

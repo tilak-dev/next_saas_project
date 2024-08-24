@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ function VedioUpload() {
   const MAX_FILE_SIZE = 70 * 1024 * 1024;
 
   const handleOnSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); //learn about
+    event.preventDefault(); //Prevent default form submission behavior
     if (!file) return;
     if (file.size > MAX_FILE_SIZE) {
       //todo add notification
@@ -23,22 +23,31 @@ function VedioUpload() {
       );
       return;
     }
+
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", title);
     formData.append("description", description);
     formData.append("originalSize", file.size.toString());
+
     try {
       const response = await axios.post("/api/video-upload", formData);
-      if (!response) {
-        console.log("Error uploading video");
-        console.log(response)
-        return;
+      if (response.data.status === 200) {
+        setFile(null);
+        setTitle("");
+        setDescription("");
+        router.push("/");
+      }else{
+        console.log("Error uploading video page result ");
+        console.log("bhai ye dekh response", response);
       }
-
     } catch (error) {
-      console.log("upload video error", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected error:", error);
+      }
       //todo add notification
     } finally {
       setIsUploading(false);
@@ -53,7 +62,7 @@ function VedioUpload() {
           <label className="label">
             <span className="label-text">Title</span>
           </label>
-          <input 
+          <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
