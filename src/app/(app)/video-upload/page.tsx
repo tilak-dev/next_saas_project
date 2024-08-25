@@ -33,7 +33,7 @@ function VedioUpload() {
 
     try {
       const response = await axios.post("/api/video-upload", formData);
-      if (response.data.status === 200) {
+      if (response.status === 200) {
         setFile(null);
         setTitle("");
         setDescription("");

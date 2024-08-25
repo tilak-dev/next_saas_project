@@ -8,13 +8,13 @@ import { Video } from '@/types'
 function Home() {
   const [videos, setVideos] = useState<Video[]>([])
   const [loading,setLoading] = useState(false)
-  const [error , setErroe] = useState<null | string>(null)
+  const [error , setError] = useState<null | string>(null)
 
   const fetchVideos = useCallback(async () => {
     setLoading(true)
     try {
       const response = await axios.get("/api/videos")
-      if(Array.isArray(response)){
+      if(Array.isArray(response.data)){
         setVideos(response.data)
       }else{
         console.log("bhai ye h response",response)
@@ -23,7 +23,7 @@ function Home() {
       } 
     } catch (error) {
       console.error(error)
-      setErroe(error as string)
+      setError(error as string)
     } finally{
        setLoading(false)
     }
